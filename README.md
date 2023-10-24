@@ -1,0 +1,2 @@
+# SchoolPlanner
+Schulplaner Android Applikation
