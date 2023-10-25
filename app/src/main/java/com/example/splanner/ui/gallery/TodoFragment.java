@@ -1,4 +1,4 @@
-package com.example.splanner.ui.slideshow;
+package com.example.splanner.ui.gallery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.splanner.databinding.FragmentSlideshowBinding;
+import com.example.splanner.databinding.FragmentGalleryBinding;
 
-public class SlideshowFragment extends Fragment {
+public class TodoFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentGalleryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        TodoViewModel todoViewModel =
+                new ViewModelProvider(this).get(TodoViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textTodo;
+        todoViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

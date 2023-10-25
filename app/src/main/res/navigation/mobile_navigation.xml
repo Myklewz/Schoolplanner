@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.splanner.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:id="@+id/nav_todo"
+        android:name="com.example.splanner.ui.gallery.TodoFragment"
+        android:label="@string/menu_todo"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.splanner.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:id="@+id/nav_calendar"
+        android:name="com.example.splanner.ui.calendar.CalendarFragment"
+        android:label="@string/menu_calendar"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>
