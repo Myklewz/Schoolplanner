@@ -6,16 +6,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="?android:attr/textSelectHandleLeft"
+            android:icon="@drawable/ic_menu_home"
             android:iconTint="@color/black"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_todo"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_todo"
             android:title="@string/menu_todo" />
         <item
             android:id="@+id/nav_calendar"
-            android:icon="@android:drawable/ic_menu_my_calendar"
+            android:icon="@drawable/ic_menu_calendar"
             android:title="@string/menu_calendar"
             android:iconTint="@color/black" />
     </group>
