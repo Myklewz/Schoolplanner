@@ -6,9 +6,9 @@
         <item name="colorPrimaryVariant">#7E0000</item>
         <item name="colorOnPrimary">#202020</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#FF1919</item>
+        <item name="colorSecondary">#C80101</item>
         <item name="colorSecondaryVariant">#CA0000</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
