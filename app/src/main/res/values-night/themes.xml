@@ -3,7 +3,7 @@
     <style name="Theme.SPlanner" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#C10000</item>
-        <item name="colorPrimaryVariant">#7E0000</item>
+        <item name="colorPrimaryVariant">#AC0000</item>
         <item name="colorOnPrimary">#202020</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#C80101</item>
