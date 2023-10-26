@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.splanner.databinding.FragmentGalleryBinding;
+import com.example.splanner.databinding.FragmentTodoBinding;
 
 public class TodoFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentTodoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         TodoViewModel todoViewModel =
                 new ViewModelProvider(this).get(TodoViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentTodoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textTodo;
