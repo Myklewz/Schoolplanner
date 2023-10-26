@@ -1,4 +1,4 @@
-package com.example.splanner.ui.gallery;
+package com.example.splanner.ui.todo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
