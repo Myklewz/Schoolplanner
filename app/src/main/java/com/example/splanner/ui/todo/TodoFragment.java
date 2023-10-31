@@ -1,13 +1,14 @@
 package com.example.splanner.ui.todo;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ArrayAdapter;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -55,12 +56,28 @@ public class TodoFragment extends Fragment {
         todoListView.setOnItemClickListener((parent, view, position, id) -> {
             Task task = taskAdapter.getItem(position);
             if (task != null) {
-                boolean deleted = dataSource.deleteTask(task.getId());
-                if (deleted) {
-                    taskAdapter.remove(task);
-                } else {
-                    Toast.makeText(requireContext(), "Failed to delete task", Toast.LENGTH_SHORT).show();
-                }
+                // Show a confirmation dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle("Delete Task");
+                builder.setMessage("Are you sure you want to delete this task?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        boolean deleted = dataSource.deleteTask(task.getId());
+                        if (deleted) {
+                            taskAdapter.remove(task);
+                        } else {
+                            Toast.makeText(requireContext(), "Failed to delete task", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User chose not to delete the task
+                    }
+                });
+                builder.show();
             }
         });
 
