@@ -23,5 +23,5 @@
         android:layout_below="@id/text_todo"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:nestedScrollingEnabled="true"/>
-"
+
 </RelativeLayout>
