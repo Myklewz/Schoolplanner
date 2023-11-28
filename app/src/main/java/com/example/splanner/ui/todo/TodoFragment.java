@@ -1,37 +1,100 @@
 package com.example.splanner.ui.todo;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.splanner.databinding.FragmentTodoBinding;
+import com.example.splanner.R;
 
 public class TodoFragment extends Fragment {
 
-    private FragmentTodoBinding binding;
+    private TodoViewModel todoViewModel;
+    private TodoDataSource dataSource;
+    private ArrayAdapter<Task> taskAdapter;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        TodoViewModel todoViewModel =
-                new ViewModelProvider(this).get(TodoViewModel.class);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        todoViewModel = new ViewModelProvider(this).get(TodoViewModel.class);
+        dataSource = new TodoDataSource(requireContext());
+        dataSource.open(); // Open the database connection
 
-        binding = FragmentTodoBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        View root = inflater.inflate(R.layout.fragment_todo, container, false);
+        ListView todoListView = root.findViewById(R.id.todoListView);
+        EditText taskEditText = root.findViewById(R.id.editTextTask);
+        Button addButton = root.findViewById(R.id.buttonAddTask);
 
-        final TextView textView = binding.textTodo;
-        todoViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        // Create an ArrayAdapter to display tasks in the ListView
+        taskAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1);
+        todoListView.setAdapter(taskAdapter);
+
+        addButton.setOnClickListener(v -> {
+            String taskName = taskEditText.getText().toString();
+            if (!taskName.isEmpty()) {
+                Task task = new Task(-1, taskName); // -1 is a placeholder for the auto-generated ID
+                long insertedId = dataSource.insertTask(task);
+                if (insertedId != -1) {
+                    task.setId((int) insertedId); // Set the actual ID from the database
+                    taskAdapter.add(task);
+                    taskEditText.getText().clear();
+                } else {
+                    Toast.makeText(requireContext(), "Failed to add task", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        todoListView.setOnItemClickListener((parent, view, position, id) -> {
+            Task task = taskAdapter.getItem(position);
+            if (task != null) {
+                // Show a confirmation dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle("Delete Task");
+                builder.setMessage("Are you sure you want to delete this task?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        boolean deleted = dataSource.deleteTask(task.getId());
+                        if (deleted) {
+                            taskAdapter.remove(task);
+                        } else {
+                            Toast.makeText(requireContext(), "Failed to delete task", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User chose not to delete the task
+                    }
+                });
+                builder.show();
+            }
+        });
+
         return root;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void onResume() {
+        super.onResume();
+        // Update the taskAdapter with tasks from the database
+        taskAdapter.clear();
+        taskAdapter.addAll(dataSource.getAllTasks());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dataSource.close(); // Close the database connection when the fragment is destroyed
     }
 }
