@@ -4,12 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.splanner.R;
-
 import java.util.List;
 
 public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHolder> {
@@ -18,7 +15,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
     private OnEntryClickListener onEntryClickListener;
 
     public interface OnEntryClickListener {
-        void onEntryClick(int position);
+        void onEntryClick(Entry entry);
     }
 
     public EntryAdapter(List<Entry> entryList, OnEntryClickListener onEntryClickListener) {
@@ -29,8 +26,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
     @NonNull
     @Override
     public EntryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_entry, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_entry, parent, false);
         return new EntryViewHolder(view);
     }
 
@@ -39,6 +35,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
         Entry entry = entryList.get(position);
         holder.titleTextView.setText(entry.getTitle());
         holder.descriptionTextView.setText(entry.getDescription());
+        holder.itemView.setOnClickListener(v -> onEntryClickListener.onEntryClick(entry));
     }
 
     @Override
@@ -46,7 +43,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
         return entryList.size();
     }
 
-    public class EntryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class EntryViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         TextView descriptionTextView;
 
@@ -54,17 +51,6 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
             super(itemView);
             titleTextView = itemView.findViewById(R.id.entryTitleTextView);
             descriptionTextView = itemView.findViewById(R.id.entryDescriptionTextView);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (onEntryClickListener != null) {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    onEntryClickListener.onEntryClick(position);
-                }
-            }
         }
     }
 }

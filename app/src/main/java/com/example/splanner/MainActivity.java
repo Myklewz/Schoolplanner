@@ -1,15 +1,11 @@
 package com.example.splanner;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -18,41 +14,24 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.splanner.databinding.ActivityMainBinding;
-import com.example.splanner.ui.settings.SettingsActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private ActivityMainBinding binding;
     private SharedPreferences sharedPreferences;
-    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
-        int primaryColor = sharedPreferences.getInt("primary_color", ContextCompat.getColor(this, R.color.default_primary));
-        int secondaryColor = sharedPreferences.getInt("secondary_color", ContextCompat.getColor(this, R.color.default_secondary));
-
-        com.example.splanner.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Toolbar toolbar = binding.appBarMain.toolbar;
-        setSupportActionBar(toolbar);
-
-        fab = binding.appBarMain.fab;
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
-
-        // Set FloatingActionButton color
-        fab.setBackgroundTintList(ColorStateList.valueOf(secondaryColor));
+        setSupportActionBar(binding.appBarMain.toolbar);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_todo, R.id.nav_calendar)
                 .setOpenableLayout(drawer)
@@ -61,29 +40,32 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        setTheme(primaryColor, secondaryColor, toolbar);
+        // Get shared preferences for color settings
+        sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
+        int primaryColor = sharedPreferences.getInt("primary_color", ContextCompat.getColor(this, R.color.default_primary));
+
+        // Set the toolbar color
+        binding.appBarMain.toolbar.setBackgroundColor(primaryColor);
+
+        // Update the drawer header background color
+        updateDrawerHeaderBackground(primaryColor);
     }
 
-    private void setTheme(int primaryColor, int secondaryColor, Toolbar toolbar) {
-        getTheme().applyStyle(R.style.AppTheme_Custom, true);
-        getWindow().setStatusBarColor(primaryColor);
-        toolbar.setBackgroundColor(primaryColor);
+    private void updateDrawerHeaderBackground(int primaryColor) {
+        // Load the drawable
+        GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this, R.drawable.side_nav_bar);
+        if (drawable != null) {
+            // Change the gradient colors
+            int[] colors = {primaryColor, primaryColor, primaryColor}; // Use primary color for all gradient stops
+            drawable.setColors(colors);
+            binding.navView.getHeaderView(0).setBackground(drawable);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

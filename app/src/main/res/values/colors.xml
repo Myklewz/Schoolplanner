@@ -10,6 +10,10 @@
     <color name="dblue">#1A598E</color>
     <color name="default_primary">#6200EE</color>
     <color name="default_secondary">#03DAC5</color>
+    <color name="nav_bar_start">#D52121</color>
+    <color name="nav_bar_center">#FF0000</color>
+    <color name="nav_bar_end">#D30000</color>
+
 
 
 </resources>
