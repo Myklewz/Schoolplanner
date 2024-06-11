@@ -37,9 +37,27 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Select Date"
+        android:id="@+id/selectDateButton"
+        android:layout_below="@id/entryDescriptionEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selectedDateTextView"
+        android:text="Selected Date: None"
+        android:layout_below="@id/selectDateButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/saveButton"
-        android:layout_below="@id/entryDescriptionEditText"
+        android:layout_below="@id/selectedDateTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"/>
 </RelativeLayout>

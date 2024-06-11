@@ -4,40 +4,47 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.splanner.R;
+import com.example.splanner.ui.calendar.DatabaseHelper;
 
 public class AddEntryActivity extends AppCompatActivity {
 
     private EditText entryTitleEditText;
     private EditText entryDescriptionEditText;
     private Button saveButton;
+    private DatabaseHelper dbHelper;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_addentryactivity); // Create a corresponding layout XML file
+        setContentView(R.layout.layout_addentryactivity);
 
         entryTitleEditText = findViewById(R.id.entryTitleEditText);
         entryDescriptionEditText = findViewById(R.id.entryDescriptionEditText);
         saveButton = findViewById(R.id.saveButton);
+        dbHelper = new DatabaseHelper(this);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Retrieve the user's input from the EditText fields
                 String title = entryTitleEditText.getText().toString();
                 String description = entryDescriptionEditText.getText().toString();
+                String date = getIntent().getStringExtra("selectedDate");
 
-                // Perform the action to add the new entry to the calendar
-                // You can implement the logic to add the entry to your calendar data here
-                // This could involve saving it to a database or performing other relevant actions
+                if (title.isEmpty() || description.isEmpty() || date == null) {
+                    Toast.makeText(AddEntryActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                // For simplicity, we'll just finish the activity for this example
+                dbHelper.addEntry(title, description, date);
+                Toast.makeText(AddEntryActivity.this, "Entry added", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
     }
 }
-

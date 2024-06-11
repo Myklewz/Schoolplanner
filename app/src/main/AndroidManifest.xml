@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SPlanner"
         tools:targetApi="31">
+        <activity android:name=".ui.calendar.AddEntryActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
