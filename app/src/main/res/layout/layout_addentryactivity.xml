@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -10,14 +9,14 @@
         android:layout_height="wrap_content"
         android:text="Entry Title:"
         android:id="@+id/entryTitleLabel"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/entryTitleEditText"
         android:layout_below="@id/entryTitleLabel"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,39 +24,36 @@
         android:text="Entry Description:"
         android:id="@+id/entryDescriptionLabel"
         android:layout_below="@id/entryTitleEditText"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/entryDescriptionEditText"
         android:layout_below="@id/entryDescriptionLabel"
-        android:layout_marginTop="8dp"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Date"
-        android:id="@+id/selectDateButton"
-        android:layout_below="@id/entryDescriptionEditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/selectedDateTextView"
-        android:text="Selected Date: None"
-        android:layout_below="@id/selectDateButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:text="Select Date:"
+        android:id="@+id/entryDateLabel"
+        android:layout_below="@id/entryDescriptionEditText"
+        android:layout_marginTop="16dp" />
+
+    <DatePicker
+        android:id="@+id/entryDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/entryDateLabel"
+        android:layout_marginTop="8dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/saveButton"
-        android:layout_below="@id/selectedDateTextView"
+        android:layout_below="@id/entryDatePicker"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
 </RelativeLayout>

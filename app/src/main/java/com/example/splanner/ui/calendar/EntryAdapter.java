@@ -15,9 +15,15 @@ import java.util.List;
 public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHolder> {
 
     private List<Entry> entryList;
+    private OnEntryClickListener onEntryClickListener;
 
-    public EntryAdapter(List<Entry> entryList) {
+    public interface OnEntryClickListener {
+        void onEntryClick(int position);
+    }
+
+    public EntryAdapter(List<Entry> entryList, OnEntryClickListener onEntryClickListener) {
         this.entryList = entryList;
+        this.onEntryClickListener = onEntryClickListener;
     }
 
     @NonNull
@@ -40,7 +46,7 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
         return entryList.size();
     }
 
-    public static class EntryViewHolder extends RecyclerView.ViewHolder {
+    public class EntryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleTextView;
         TextView descriptionTextView;
 
@@ -48,6 +54,17 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
             super(itemView);
             titleTextView = itemView.findViewById(R.id.entryTitleTextView);
             descriptionTextView = itemView.findViewById(R.id.entryDescriptionTextView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (onEntryClickListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    onEntryClickListener.onEntryClick(position);
+                }
+            }
         }
     }
 }

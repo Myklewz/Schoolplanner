@@ -1,28 +1,25 @@
 package com.example.splanner.ui.todo;
-public class Task {
-    private int id;
-    private String taskName;
 
-    public Task(int id, String taskName) {
+public class Task {
+    private long id;
+    private String title;
+    private String description;
+
+    public Task(long id, String title, String description) {
         this.id = id;
-        this.taskName = taskName;
+        this.title = title;
+        this.description = description;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getTitle() {
+        return title;
     }
 
-    public String getTaskName() {
-        return taskName;
-    }
-
-    @Override
-    public String toString() {
-        return taskName; // This will display the task's name
+    public String getDescription() {
+        return description;
     }
 }
-

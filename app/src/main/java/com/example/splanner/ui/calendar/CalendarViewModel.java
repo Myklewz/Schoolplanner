@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel;
 
 public class CalendarViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<String> selectedDate = new MutableLiveData<>();
 
-    public CalendarViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("Kalender");
+    public void setSelectedDate(String date) {
+        selectedDate.setValue(date);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<String> getSelectedDate() {
+        return selectedDate;
     }
 }
