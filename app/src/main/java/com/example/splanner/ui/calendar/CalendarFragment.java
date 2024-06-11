@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
@@ -18,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splanner.R;
-import com.example.splanner.ui.calendar.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -34,6 +34,7 @@ public class CalendarFragment extends Fragment implements EntryAdapter.OnEntryCl
     private List<Entry> entryList;
     private DatabaseHelper dbHelper;
     private FloatingActionButton fab;
+    private Button clearEntriesButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +42,8 @@ public class CalendarFragment extends Fragment implements EntryAdapter.OnEntryCl
 
         calendarView = root.findViewById(R.id.calendarView);
         entriesRecyclerView = root.findViewById(R.id.entriesRecyclerView);
-        fab = getActivity().findViewById(R.id.fab); // Access the FloatingActionButton from the activity layout
+        fab = getActivity().findViewById(R.id.fab);
+        clearEntriesButton = root.findViewById(R.id.clearEntriesButton);
         dbHelper = new DatabaseHelper(getContext());
 
         entriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -58,6 +60,8 @@ public class CalendarFragment extends Fragment implements EntryAdapter.OnEntryCl
         });
 
         fab.setOnClickListener(v -> startActivity(new Intent(getContext(), AddEntryActivity.class)));
+
+        clearEntriesButton.setOnClickListener(v -> clearAllEntries());
 
         // Initial load for the current date
         String initialDate = getCurrentDate();
