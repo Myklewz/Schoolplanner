@@ -1,16 +1,41 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+
     <!-- Base application theme. -->
-    <style name="Theme.SPlanner" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.SPlanner" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#C10000</item>
-        <item name="colorPrimaryVariant">#AC0000</item>
-        <item name="colorOnPrimary">#202020</item>
+        <item name="colorPrimary">@color/default_primary</item>
+        <item name="colorPrimaryVariant">@color/default_primary</item>
+        <item name="colorOnPrimary">@android:color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#C80101</item>
-        <item name="colorSecondaryVariant">#CA0000</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="colorSecondary">@color/default_secondary</item>
+        <item name="colorSecondaryVariant">@color/default_secondary</item>
+        <item name="colorOnSecondary">@android:color/black</item>
         <!-- Customize your theme here. -->
+        <item name="buttonStyle">@style/Widget.SPlanner.Button</item>
+        <item name="floatingActionButtonStyle">@style/Widget.SPlanner.FloatingActionButton</item>
     </style>
+
+    <style name="Theme.SPlanner.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.SPlanner.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+
+    <style name="Theme.SPlanner.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="AppTheme.Custom" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- We'll dynamically change these in MainActivity -->
+    </style>
+
+    <!-- Button Style -->
+    <style name="Widget.SPlanner.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/default_secondary</item>
+    </style>
+
+    <!-- FloatingActionButton Style -->
+    <style name="Widget.SPlanner.FloatingActionButton" parent="Widget.Design.FloatingActionButton">
+        <item name="backgroundTint">@color/default_secondary</item>
+    </style>
+
 </resources>
